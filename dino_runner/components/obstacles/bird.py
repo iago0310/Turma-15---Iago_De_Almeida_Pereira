@@ -6,6 +6,7 @@ from dino_runner.utils.constants import BIRD
 class bird(Obstacle): ##criação da classe passaros
     def __init__(self, image):
         self.type = 0
+        self.image = BIRD
         super().__init__(image, self.type)
         self.rect.y = 250 ##altura do passaro
         self.index = 0 

@@ -1,12 +1,11 @@
 import pygame
-
 import random
-from dino_runner.components.obstacles.cactus import small_cactus ##importa a função do cacto pequeno
+
+from dino_runner.components.obstacles.cactus import small_cactus, large_cactus ##importa a função do cacto pequeno
 from dino_runner.components.obstacles.cactus import large_cactus ##importa a função do cacto grande
 from dino_runner.components.obstacles.bird import bird ##importa a função do passaro
-from dino_runner.utils.constants import SMALL_CACTUS ##importa a imagem do cacto pequeno
-from dino_runner.utils.constants import LARGE_CACTUS ##importa a imagem do cacto grande
-from dino_runner.utils.constants import BIRD ##importa a imagem do passaro
+from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS, BIRD ##importa a imagem do cacto pequeno, grande, passaro
+
 
 class ObstacleManager:
     def __init__(self):
@@ -24,10 +23,16 @@ class ObstacleManager:
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect):
-                pygame.time.delay(1000)
+                game.score -= 1 ## diminui o score pra não dar vantagem
+                game.game_speed = 20 ##reseta a velocidade
+                pygame.time.delay(500)
                 game.playing = False
+                game.death_count += 1
                 break
 
     def draw(self, screen):
         for obstacle in self.obstacles:
             obstacle.draw(screen)
+
+    def reset_obstacles(self):
+        self.obstacles = []           
