@@ -13,7 +13,7 @@ class PowerUpManager:
         if len(self.power_ups) == 0 and self.when_appears == score:
             power = random.randint(0, 2)
             self.when_appears += random.randint (400, 500)
-            if power == 0 or power == 2:
+            if power == 0:
                 self.power_ups.append(Shield())
             if power == 1:
                 self.power_ups.append(Hammer())
