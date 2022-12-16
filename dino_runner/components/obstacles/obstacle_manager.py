@@ -13,22 +13,32 @@ class ObstacleManager:
 
     def update(self, game):
         if len(self.obstacles) == 0: ##randomiza entre os 3 obstaculos
-            if random.randint(0, 2) == 0:
+            obs = random.randint(0, 2)
+            if obs == 0:
                 self.obstacles.append(small_cactus(SMALL_CACTUS))
-            elif random.randint(0, 2) == 1:
+            elif obs == 1:
                 self.obstacles.append(large_cactus(LARGE_CACTUS))
-            elif random.randint(0, 2) == 2:
+            elif obs == 2:
                 self.obstacles.append(bird(BIRD))
 
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect):
-                game.score -= 1 ## diminui o score pra não dar vantagem
-                game.game_speed = 20 ##reseta a velocidade
-                pygame.time.delay(500)
-                game.playing = False
-                game.death_count += 1
-                break
+                
+                if game.player.type == 'hammer':
+                    self.obstacles.remove(obstacle)
+                    game.game_speed = 20
+
+                elif game.player.type == 'shield':
+                    self.obstacles.remove(obstacle)
+                    
+                else:
+                    game.player.has_power_up
+                    pygame.time.delay(500)
+                    game.playing = False
+                    game.death_count += 1
+                    break    
+
 
     def draw(self, screen):
         for obstacle in self.obstacles:
